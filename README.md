@@ -30,4 +30,9 @@
 - в тестах использованы аннотации @Test, @Tag, @ParametrizedTest, @DisplayName.
 - в тестах использованы assertEquals, assertTrue.
 - настроен Allure отчеты и приложен скриншот пройденных тестов;
-- посчитан процент покрытия используя Jacoco. 
+
+<img width="1889" height="799" alt="image" src="https://github.com/user-attachments/assets/9e74c9c6-78cf-474a-80d4-08256bd70b0b" />
+<img width="1690" height="510" alt="image" src="https://github.com/user-attachments/assets/f0ff724b-2535-4466-a450-eba91b42bece" />
+
+- посчитан процент покрытия используя Jacoco.
+<img width="942" height="204" alt="image" src="https://github.com/user-attachments/assets/0e37f191-c1fd-4157-9d77-025bafd72f91" />
