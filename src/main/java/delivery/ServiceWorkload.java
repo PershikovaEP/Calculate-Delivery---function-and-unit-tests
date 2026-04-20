@@ -1,35 +1,22 @@
 package delivery;
 
-public class ServiceWorkload {
+public enum ServiceWorkload {
 
-    //загруженность
-    private double multiplier_workload;
+    VERY_HIGH(1.6),
+    HIGH(1.4),
+    ELEVATED(1.2),
+    NORMAL(1);
 
-    //конструктор, если не указана загруженность
-    public ServiceWorkload() {
-        multiplier_workload = 1;
+    private final double multiplierWorkload;
+
+    ServiceWorkload(double multiplierWorkload) {
+        this.multiplierWorkload = multiplierWorkload;
     }
 
     //конструктор, если указана загруженность
-    public ServiceWorkload(String workload) {
 
-        if (workload == null) {
-            multiplier_workload = 1;
-            return;
-        }
 
-        if (workload.equals("very_high")) {
-            multiplier_workload = 1.6;
-        } else if (workload.equals("high")) {
-            multiplier_workload = 1.4;
-        } else if (workload.equals("elevated")) {
-            multiplier_workload = 1.2;
-        } else {
-            multiplier_workload = 1;
-        }
-    }
-
-    public double getMultiplier_workload() {
-        return multiplier_workload;
+    public double getMultiplierWorkload() {
+        return multiplierWorkload;
     }
 }

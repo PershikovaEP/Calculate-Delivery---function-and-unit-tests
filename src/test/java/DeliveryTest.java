@@ -18,16 +18,16 @@ public class DeliveryTest {
     @DisplayName("Позитивные сценарии")
     @Tag("Хеппи-пас")
     @CsvSource(
-            {"31, small, false, high",
-             "29, big, true, elevated",
-             "15, small, false, very_high",
-             "8, big, true, high",
-             "1, big, true, norm"
+            {"31, SMALL, false, HIGH",
+             "29, BIG, true, ELEVATED",
+             "15, SMALL, false, VERY_HIGH",
+             "8, BIG, true, HIGH",
+             "1, BIG, true, NORMAL"
     })
     void positiveTest(int length, String cargo, boolean fragility, String workload) throws Exception{
 
-        List<Integer> expectedDelivery = Arrays.asList(560, 840, 480, 840, 550);
-        int actual = delivery.sumShipping(length, cargo, fragility, workload);
+        List<Double> expectedDelivery = Arrays.asList(560.0, 840.0, 480.0, 840.0, 550.0);
+        double actual = delivery.sumShipping(length, cargo, fragility, workload);
 
         assertTrue(expectedDelivery.contains(actual));
     }
@@ -37,7 +37,7 @@ public class DeliveryTest {
     @Tag("Негативные сценарии")
     void deliveryLessThan400Test() throws Exception{
 
-        double actual = delivery.sumShipping(1, "big", false, "elevated");
+        double actual = delivery.sumShipping(1, "BIG", false, "ELEVATED");
 
         assertEquals(400, actual);
     }
@@ -47,7 +47,7 @@ public class DeliveryTest {
     @Tag("Негативные сценарии")
     void fragilityAtDistanceOfMoreThan30Test() throws Exception{
 
-        Exception thrown = assertThrows(IllegalArgumentException.class, () -> delivery.sumShipping(31, "big", true, "very_high"));
+        Exception thrown = assertThrows(IllegalArgumentException.class, () -> delivery.sumShipping(31, "BIG", true, "VERY_HIGH"));
 
         assertEquals("Хрупкие грузы нельзя возить на расстояние более 30 км", thrown.getMessage());
     }
@@ -57,7 +57,7 @@ public class DeliveryTest {
     @Tag("Негативные сценарии")
     void shouldDistanceOfMoreThan0Test() throws Exception{
 
-        Exception thrown = assertThrows(IllegalArgumentException.class, () -> delivery.sumShipping(-10, "big", true, "very_high"));
+        Exception thrown = assertThrows(IllegalArgumentException.class, () -> delivery.sumShipping(-10, "BIG", true, "VERY_HIGH"));
 
         assertEquals("Расстояние не может быть отрицательным или равным 0", thrown.getMessage());
     }
@@ -68,7 +68,7 @@ public class DeliveryTest {
     @Tag("Негативные сценарии")
     void exceptionTest() {
 
-        Exception thrown = assertThrows(NullPointerException.class, () -> delivery.sumShipping(10, null, true, "very_high"));
+        Exception thrown = assertThrows(NullPointerException.class, () -> delivery.sumShipping(10, null, true, "VERY_HIGH"));
 
         assertEquals("Размер груза не может быть равен null", thrown.getMessage());
     }

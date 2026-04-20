@@ -1,24 +1,18 @@
 package delivery;
 
-public class CargoDimension {
+public enum CargoDimension {
+
+    BIG(200),
+    SMALL(100);
 
     //габариты
-    private int sum_dimensions;
+    private int dimensions;
 
-    public CargoDimension(String dimensions) throws Exception {
-
-        if (dimensions == null) {
-            throw new NullPointerException("Размер груза не может быть равен null");
-        }
-        if (dimensions.equals("big")) {
-            sum_dimensions = 200;
-        } else if (dimensions.equals("small")) {
-            sum_dimensions = 100;
-        } else
-            throw new Exception("Некорректный размер" + dimensions);
-        }
+    CargoDimension(int dimensions) {
+        this.dimensions = dimensions;
+    }
 
     public int getSum_dimensions() {
-        return sum_dimensions;
+        return dimensions;
     }
 }
