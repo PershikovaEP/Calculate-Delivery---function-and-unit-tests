@@ -1,4 +1,4 @@
-import delivery.Delivery;
+import delivery.DeliveryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -12,29 +12,30 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DeliveryTest {
 
-    Delivery delivery = new Delivery();
+    DeliveryService delivery = new DeliveryService();
 
     @ParameterizedTest
     @DisplayName("Позитивные сценарии")
-    @Tag("Хеппи-пас")
+    @Tag("Positive")
     @CsvSource(
-            {"31, SMALL, false, HIGH",
-             "29, BIG, true, ELEVATED",
-             "15, SMALL, false, VERY_HIGH",
-             "8, BIG, true, HIGH",
-             "1, BIG, true, NORMAL"
+            {"31, SMALL, false, HIGH, 560.0",
+             "29, BIG, true, ELEVATED, 840.0",
+             "15, SMALL, false, VERY_HIGH, 480.0",
+             "8, BIG, true, HIGH, 840.0",
+             "1, BIG, true, NORMAL, 550.0"
     })
-    void positiveTest(int length, String cargo, boolean fragility, String workload) throws Exception{
+    void positiveTest(int length, String cargo, boolean fragility, String workload, double expected) throws Exception{
 
-        List<Double> expectedDelivery = Arrays.asList(560.0, 840.0, 480.0, 840.0, 550.0);
+       // List<Double> expectedDelivery = Arrays.asList(560.0, 840.0, 480.0, 840.0, 550.0);
         double actual = delivery.sumShipping(length, cargo, fragility, workload);
 
-        assertTrue(expectedDelivery.contains(actual));
+        //assertTrue(expectedDelivery.contains(actual));
+        assertEquals(expected, actual, 0.001);
     }
 
     @Test
     @DisplayName("Проверка стоимости доставки меньше 400")
-    @Tag("Негативные сценарии")
+    @Tag("Negative")
     void deliveryLessThan400Test() throws Exception{
 
         double actual = delivery.sumShipping(1, "BIG", false, "ELEVATED");
@@ -44,7 +45,7 @@ public class DeliveryTest {
 
     @Test
     @DisplayName("Ошибка при перевозке хрупкого груза более 30км")
-    @Tag("Негативные сценарии")
+    @Tag("Negative")
     void fragilityAtDistanceOfMoreThan30Test() throws Exception{
 
         Exception thrown = assertThrows(IllegalArgumentException.class, () -> delivery.sumShipping(31, "BIG", true, "VERY_HIGH"));
@@ -54,7 +55,7 @@ public class DeliveryTest {
 
     @Test
     @DisplayName("Расстояние должно быть больше 0")
-    @Tag("Негативные сценарии")
+    @Tag("Negative")
     void shouldDistanceOfMoreThan0Test() throws Exception{
 
         Exception thrown = assertThrows(IllegalArgumentException.class, () -> delivery.sumShipping(-10, "BIG", true, "VERY_HIGH"));
@@ -65,7 +66,7 @@ public class DeliveryTest {
     //ошибка на null
     @Test
     @DisplayName("Ошибка null")
-    @Tag("Негативные сценарии")
+    @Tag("Negative")
     void exceptionTest() {
 
         Exception thrown = assertThrows(NullPointerException.class, () -> delivery.sumShipping(10, null, true, "VERY_HIGH"));
